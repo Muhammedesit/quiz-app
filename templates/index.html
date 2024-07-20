@@ -1,1 +1,31 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz</h1>
+        <form action="/submit" method="post">
+            {% for question in questions %}
+            <div class="question">
+                <p>{{ question['question'] }}</p>
+                {% set options = question['options'] | from_json %}
+                {% for option in options %}
+                <input type="radio" id="{{ loop.index }}_{{ question['id'] }}" name="{{ question['id'] }}" value="{{ option }}">
+                <label for="{{ loop.index }}_{{ question['id'] }}">{{ option }}</label><br>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <input type="submit" value="Submit Answers">
+        </form>
+    </div>
+    <footer>
+        Muhammed Esit
+    </footer>
+</body>
+</html>
