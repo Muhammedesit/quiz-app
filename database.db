@@ -1,0 +1,24 @@
+import sqlite3
+
+conn = sqlite3.connect('database.db')
+c = conn.cursor()
+
+# Tabloları oluştur
+c.execute('''
+CREATE TABLE IF NOT EXISTS questions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question TEXT,
+    options TEXT,
+    correct_answer TEXT
+)''')
+
+# Örnek sorular ekleyin
+questions = [
+    ("What is the capital of France?", '["Paris", "London", "Berlin"]', "Paris"),
+    ("What is 2 + 2?", '["3", "4", "5"]', "4"),
+    ("Which language is primarily used for Android app development?", '["Java", "Swift", "Kotlin"]', "Kotlin")
+]
+
+c.executemany("INSERT INTO questions (question, options, correct_answer) VALUES (?, ?, ?)", questions)
+conn.commit()
+conn.close()
